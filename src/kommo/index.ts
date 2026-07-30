@@ -79,7 +79,7 @@ export async function getLeadData(entityId: string): Promise<KommoLead> {
 }
 
 export function parseAllowedStatusIds(raw: string | undefined): number[] {
-	return (raw ?? "94318692")
+	return (raw ?? "")
 		.split(",")
 		.map((s) => s.trim())
 		.filter((s) => s.length > 0)
@@ -90,12 +90,14 @@ export function parseAllowedStatusIds(raw: string | undefined): number[] {
 export type StageCheckResult =
 	| { allowed: true; lead: KommoLead; error?: undefined }
 	| { allowed: false; lead: KommoLead; error?: undefined }
-	| { allowed: true; lead: null; error: unknown };
+	| { allowed: true; lead: null; error?: unknown };
 
 export async function checkLeadStageAllowed(
 	entityId: string,
 ): Promise<StageCheckResult> {
 	const allowed = parseAllowedStatusIds(process.env.KOMMO_ALLOWED_STATUS_IDS);
+	// Sin allowlist configurada, el agente responde a cualquier etapa.
+	if (allowed.length === 0) return { allowed: true, lead: null };
 	try {
 		const lead = await getLeadData(entityId);
 		return { allowed: allowed.includes(lead.status_id), lead };

@@ -350,12 +350,12 @@ describe("sendMessages", () => {
 });
 
 describe("parseAllowedStatusIds", () => {
-  it("undefined → default [94318692]", () => {
+  it("undefined → array vacío [] (sin filtro)", () => {
     // Act
     const result = parseAllowedStatusIds(undefined);
 
     // Assert
-    expect(result).toEqual([94318692]);
+    expect(result).toEqual([]);
   });
 
   it("CSV simple '94318692' → [94318692]", () => {
@@ -398,19 +398,18 @@ describe("checkLeadStageAllowed", () => {
   });
 
   describe("✅ Happy path", () => {
-    it("lead con status_id en allowlist default (94318692) → { allowed: true, lead }", async () => {
+    it("sin allowlist configurada → allowed sin consultar el lead", async () => {
       // Arrange
       delete process.env.KOMMO_ALLOWED_STATUS_IDS;
-      const lead = { id: 1, status_id: 94318692, pipeline_id: 12207252 };
-      fetchSpy.mockResolvedValueOnce(buildFetchOk(lead));
 
       // Act
       const result = await checkLeadStageAllowed("1");
 
       // Assert
       expect(result.allowed).toBe(true);
-      expect(result.lead).toEqual(lead);
+      expect(result.lead).toBeNull();
       expect(result.error).toBeUndefined();
+      expect(fetchSpy).not.toHaveBeenCalled();
     });
 
     it("allowlist custom '94318692,12345' + lead status_id=12345 → allowed", async () => {
@@ -431,7 +430,7 @@ describe("checkLeadStageAllowed", () => {
   describe("🚫 Filtered", () => {
     it("lead status_id fuera de allowlist → { allowed: false, lead }", async () => {
       // Arrange
-      delete process.env.KOMMO_ALLOWED_STATUS_IDS;
+      process.env.KOMMO_ALLOWED_STATUS_IDS = "94318692";
       const lead = { id: 3, status_id: 99999, pipeline_id: 12207252 };
       fetchSpy.mockResolvedValueOnce(buildFetchOk(lead));
 
@@ -443,24 +442,23 @@ describe("checkLeadStageAllowed", () => {
       expect(result.lead).toEqual(lead);
     });
 
-    it("allowlist vacía '' + cualquier lead → filtered", async () => {
+    it("allowlist vacía '' + cualquier lead → allowed (sin filtro)", async () => {
       // Arrange
       process.env.KOMMO_ALLOWED_STATUS_IDS = "";
-      fetchSpy.mockResolvedValueOnce(
-        buildFetchOk({ id: 4, status_id: 94318692, pipeline_id: 12207252 }),
-      );
 
       // Act
       const result = await checkLeadStageAllowed("4");
 
       // Assert
-      expect(result.allowed).toBe(false);
+      expect(result.allowed).toBe(true);
+      expect(fetchSpy).not.toHaveBeenCalled();
     });
   });
 
   describe("💥 Edge cases (fail-open)", () => {
     it("getLeadData responde 500 → { allowed: true, lead: null, error }", async () => {
       // Arrange
+      process.env.KOMMO_ALLOWED_STATUS_IDS = "94318692";
       fetchSpy.mockResolvedValueOnce(buildFetchError(500, "kommo down"));
 
       // Act
@@ -474,6 +472,7 @@ describe("checkLeadStageAllowed", () => {
 
     it("fetch throws (red fallida) → { allowed: true, lead: null, error }", async () => {
       // Arrange
+      process.env.KOMMO_ALLOWED_STATUS_IDS = "94318692";
       fetchSpy.mockRejectedValueOnce(new Error("ECONNREFUSED"));
 
       // Act
