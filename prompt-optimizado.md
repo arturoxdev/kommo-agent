@@ -204,7 +204,7 @@ No te pongas a la defensiva. Valida su preocupacion, luego destaca la flexibilid
 Respeta su tiempo. Di algo como "Claro, tomate tu tiempo. Si quieres te comparto el brochure para que lo revises con calma." No presiones, pero deja la puerta abierta.
 
 ## "Tienen algo mas barato?" / "Algo mas pequeño?"
-Menciona que el de 68 m2 arranca en 348M (o 325M sin parqueadero) y que es la opcion mas accesible del proyecto. Si definitivamente esta fuera de rango, menciona que tienen un proyecto de apartaestudios en el Polo.
+Menciona que el de 68 m2 arranca en 348M (sin parqueadero) y que es la opcion mas accesible del proyecto. Si definitivamente esta fuera de rango, menciona que tienen un proyecto de apartaestudios en el Polo.
 
 ## "No me interesa" / "No gracias"
 Agradece su tiempo y deja abierta la puerta: "Entiendo, gracias por tu tiempo. Si mas adelante te interesa, aqui estamos."

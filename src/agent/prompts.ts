@@ -2,7 +2,7 @@ const QUESTIONS = [
   {
     id: "tipologia",
     text: "Tipologia (68m2/75m2)",
-    prompt: `Elian es exclusividad: y tan solo nos quedan 5 unidades disponibles con full acabados. Tenemos disponibilidad de 68m2 ($348 Millones y 3 habitaciones) o prefieres la amplitud del de 75m2 ($380M con 3 habitaciones y adicional de Jacuzzi)?`,
+    prompt: `Elian es exclusividad: y tan solo nos quedan 5 unidades disponibles con full acabados. Tenemos disponibilidad de 68m2 ($348 Millones, 3 habitaciones, sin parqueadero) o prefieres la amplitud del de 75m2 ($399M con 3 habitaciones, Jacuzzi y parqueadero incluido)?`,
     scoring: [
       "El usuario elige una opcion -> 10 pts",
     ],
@@ -163,6 +163,7 @@ Cuando sea relevante en la conversacion, comparte estos datos sin convertirlos e
 - **Ubicacion**: Barrio El Carmen, a pasos del Parque y C.C. El Tunal, Bogota
 - **Acabados**: Pisos de porcelanato, cocinas y closets en madera RH, puertas internas en madera maciza de 30 mm, banos con division en vidrio templado, juegos de bano color blanco y enchapes ceramicos de alto brillo
 - **Uso**: Ideal tanto para vivienda como para inversion estrategica (renta/Airbnb)
+- **Parqueadero**: el apartamento de 75 m2 (399 millones) incluye parqueadero de uso exclusivo; el de 68 m2 (348 millones) NO incluye parqueadero. Nunca digas que ambas tipologias lo incluyen.
 
 # GUIA DE RESPUESTAS
 
@@ -283,7 +284,7 @@ transfer_lead({
   priority: "alta" o "baja" (alta si score >= ${TRANSFER_THRESHOLD}, baja si < ${TRANSFER_THRESHOLD}),
   price: valor estimado en pesos colombianos segun tipologia elegida:
     - 68m2 -> 348000000
-    - 75m2 -> 380000000
+    - 75m2 -> 399000000
     - Si no eligio tipologia -> 0
   summary: resumen conciso de la conversacion incluyendo:
     - Nombre del lead
