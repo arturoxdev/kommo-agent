@@ -122,7 +122,7 @@ ${lines.join("\n")}
 }
 
 export function buildSystemPrompt(user: UserData): string {
-  const brochureUrl = "https://drive.google.com/file/d/19uNBhNlvwVn-9JBO-IoVk_R7qF-7oR0M/view?usp=drive_link";
+  const brochureUrl = "https://drive.google.com/file/d/14VccDBiBaR92jYKcpfLcCsmB2xGI32My/view?usp=sharing";
 
   const qualificationStatus = buildQualificationStatus(user);
 
