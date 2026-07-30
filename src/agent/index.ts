@@ -107,7 +107,7 @@ function buildTools() {
           properties: {
             session_id: { type: "string", description: "El entity_id del lead en Kommo" },
             priority: { type: "string", enum: ["alta", "baja"], description: "Prioridad del lead: alta para 55+ puntos, baja para menos de 55 puntos" },
-            price: { type: "number", description: "Valor estimado del lead en pesos colombianos (68m2=348000000, 75m2=380000000)" },
+            price: { type: "number", description: "Valor estimado del lead en pesos colombianos (68m2=348000000, 75m2=399000000)" },
             summary: { type: "string", description: "Resumen de la conversacion para el agente humano: nombre, tipologia, capacidad financiera, decision, interes general" },
           },
           required: ["session_id", "priority", "price", "summary"],
